@@ -1,6 +1,6 @@
 version: "3.3"
 services:
-  dnsmasq-service:
+  dnsmasq-service-0:
     build: .
     cap_add:
       - NET_ADMIN
@@ -9,35 +9,16 @@ services:
       - ./dnsmasq-config/dnsmasq-china-list/accelerated-domains.china.conf:/etc/dnsmasq.d/accelerated-domains.china.conf
       - ./dnsmasq-config/dnsmasq-china-list/apple.china.conf:/etc/dnsmasq.d/apple.china.conf
       - ./dnsmasq-config/dnsmasq-china-list/google.china.conf:/etc/dnsmasq.d/google.china.conf
-    ports:
-      - 53:53/udp
-    networks:
-      - dns-network
-    dns:
-      - 8.8.4.4
-      - 1.1.1.1
-  debug:
-    image: reg.qiniu.com/exiaohao/ubuntu-toolos:latest
-    networks:
-      - dns-network
-    command: 
-      - bash 
-      - -c 
-      - "while true; do echo \"\"; sleep 2; done"
-    # // IF you have swarm, deploy can directly create a cluster.
-    # deploy:
-    #   mode: replicated
-    #   replicas: 4
-    #   update_config:
-    #     parallelism: 2
-    #     delay: 5s
-    #   restart_policy:
-    #     condition: on-failure
-
-networks:
-  dns-network:
-    driver: bridge
-    ipam:
-      driver: default
-      config:
-        - subnet: 100.100.100.0/24
+    extra_hosts:
+       - "outside:10.7.32.25"
+  dnsmasq-service-1:
+    build: .
+    cap_add:
+      - NET_ADMIN
+    volumes:
+      - ./dnsmasq-config/dnsmasq.conf:/etc/dnsmasq.conf
+      - ./dnsmasq-config/dnsmasq-china-list/accelerated-domains.china.conf:/etc/dnsmasq.d/accelerated-domains.china.conf
+      - ./dnsmasq-config/dnsmasq-china-list/apple.china.conf:/etc/dnsmasq.d/apple.china.conf
+      - ./dnsmasq-config/dnsmasq-china-list/google.china.conf:/etc/dnsmasq.d/google.china.conf
+    extra_hosts:
+       - "outside:10.7.32.26"
