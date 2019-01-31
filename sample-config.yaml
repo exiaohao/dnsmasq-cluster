@@ -1,0 +1,10 @@
+base_dns: 8.8.4.4:53
+doh_servers:
+- https://1.1.1.1/dns-query
+- https://1.0.0.1/dns-query
+listen: 127.0.0.1
+port: 53
+cache_expire: 600
+custom_resolve_configs:
+- /Users/hao/Codes/My/dnsmasq-china-list/google.china.conf
+- /Users/hao/Codes/My/dnsmasq-china-list/accelerated-domains.china.conf
