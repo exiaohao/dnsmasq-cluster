@@ -4,8 +4,13 @@ import "time"
 
 type Cache struct {
 	Name      string
-	Record    string
+	Records   []Answer
 	ExpiredAt time.Time
+}
+
+type Answer struct {
+	Result     string
+	Preference uint16
 }
 
 // DomainCache build from queries

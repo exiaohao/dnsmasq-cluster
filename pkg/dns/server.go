@@ -23,7 +23,7 @@ type ServerConfig struct {
 	WorkProtocol       string   `yaml:"work_protocol"`
 	Listen             string   `yaml:"listen"`
 	Port               string   `yaml:"port"`
-	CacheExpire        int16    `yaml:"cache_expire"`
+	CacheExpire        uint16   `yaml:"cache_expire"`
 	CustomResolveFiles []string `yaml:"custom_resolve_configs"`
 }
 
@@ -71,7 +71,7 @@ func (s *Server) Initialize(opts InitOptions) {
 		Net:  s.Config.getWorkProtocol(),
 	}
 
-	s.DNSServer.Handler = NewAgent()
+	s.DNSServer.Handler = NewAgent(s.Config)
 }
 
 // Run a DNS server

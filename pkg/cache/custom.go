@@ -1,8 +1,9 @@
 package cache
 
 type CustomDNSConfig struct {
-	Prefix    string
-	DNSServer string
+	Prefix       string
+	DNSServer    string
+	DoHPerferred bool
 }
 
 type CustomeDNSConfigCache map[string]CustomDNSConfig
